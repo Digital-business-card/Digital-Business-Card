@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "526834263593",
+    "project_id": "digital-business-card-50871",
+    "storage_bucket": "digital-business-card-50871.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526834263593:android:817adb8bbfb67877c85e38",
+        "android_client_info": {
+          "package_name": "com.example.digitalbusinesscard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526834263593-9pj1baomulgdg9cvsi3qvira08p6dpe5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtHGuf9CFTXnuGWvURxNBM2j7UIGFY47M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526834263593-9pj1baomulgdg9cvsi3qvira08p6dpe5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
