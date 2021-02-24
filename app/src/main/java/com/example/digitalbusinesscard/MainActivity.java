@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
   }
 
-  public void ClickSetting(){
+  public void ClickSetting(View View){
 
         redirectActivity(this,Setting.class);
         

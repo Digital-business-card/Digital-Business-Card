@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Digital business card</string>
+    <string name="my_name_is_manasour_and_this_is_a_test">my name is manasour and this is a test</string>
+    <string name="login_to_your_account">Login To Your Account</string>
+    <string name="digital_business_card">Digital Business Card</string>
+    <string name="enter_your_email">Enter Your Email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="login">Login</string>
+    <string name="do_not_have_an_account_register_here">Do not have an account? Register here.</string>
+
+    <string name="enter_your_password_again">Enter your password Again</string>
+    <string name="register">Register</string>
+    <string name="already_have_an_account_login_here">Already have an account? Login here.</string>
+    <string name="this_is_main_screen">This is main Screen.</string>
+
+
+    <string name="setting">Setting</string>
+    <string name="change_language">change language</string>
+
+    <string name="profile">Profile</string>
+    <string name="support">Support</string>
+    <string name="Support">Support</string>
+    <string name="logout">Logout</string>
+    <string name="register_your_account">Register Your Account</string>
 </resources>

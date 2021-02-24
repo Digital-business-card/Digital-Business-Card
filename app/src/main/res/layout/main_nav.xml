@@ -64,7 +64,7 @@
             android:textColor="#000000"
             android:layout_weight="1"
             android:padding="20dp"
-            android:text="Profile"
+            android:text="@string/profile"
             android:textSize="30sp"/>
 
     </LinearLayout>
@@ -104,7 +104,7 @@
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:padding="20dp"
-                android:text="Setting"
+                android:text="@string/setting"
                 android:textSize="30sp"/>
 
 
@@ -142,7 +142,7 @@
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:padding="20dp"
-                android:text="Support"
+                android:text="@string/support"
                 android:textSize="30sp"/>
 
 
@@ -191,7 +191,7 @@
             android:layout_marginLeft="16dp"
             android:layout_weight="1"
             android:padding="20dp"
-            android:text="Logout"
+            android:text="@string/logout"
             android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="bold" />

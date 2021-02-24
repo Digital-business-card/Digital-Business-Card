@@ -8,14 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,9 +24,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.example.digitalbusinesscard.MainActivity.redirectActivity;
 
@@ -110,13 +104,12 @@ public class Profile extends AppCompatActivity {
                 startActivity(i);
 
                 //startActivity(new Intent(getApplicationContext(),EditProfile.class));
-               // finish();
+                // finish();
 
             }
         });
 
     }
-
 
     public void ClickMenu(View view){
 
@@ -137,25 +130,25 @@ public class Profile extends AppCompatActivity {
 
         recreate();
 
+
     }
 
     public void ClickSetting(View view){
 
-        MainActivity.redirectActivity(this,Setting.class);
-
+        redirectActivity(this, Setting.class);
     }
 
     public void ClickSupport(View view){
 
-        MainActivity.redirectActivity(this, Support.class);
-
-
+        redirectActivity(this,Support.class);
     }
 
     public  void ClickLogout(View view){
 
-        FirebaseAuth.getInstance().signOut();
-        MainActivity.redirectActivity(this, Login.class);
+        FirebaseAuth.getInstance().signOut();// Logout
+        startActivity(new Intent(getApplicationContext(),Login.class));
+        finish();
+        redirectActivity(this, Login.class);
 
     }
 
@@ -165,6 +158,7 @@ public class Profile extends AppCompatActivity {
 
         MainActivity.closeDrawer(drawerLayout);
     }
+
 
 
 
