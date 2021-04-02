@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Digital business card</string>
+    <string name="my_name_is_manasour_and_this_is_a_test">میرا نام منصور ہے اور یہ ایک امتحان ہے</string>
+    <string name="login_to_your_account">"آپ کے اکاؤنٹ میں لاگ ان کریں "</string>
+    <string name="digital_business_card">ڈیجیٹل بزنس کارڈ</string>
+    <string name="enter_your_email">اپنا ای میل درج کریں</string>
+    <string name="enter_your_password">اپنا پاس ورڈ درج کریں</string>
+    <string name="login">لاگ ان کریں</string>
+    <string name="do_not_have_an_account_register_here">کھاتہ نہیں ہے کیا؟ یہاں اندراج کریں.</string>
+
+    <string name="enter_your_password_again">اپنا پاس ورڈ دوبارہ درج کریں</string>
+    <string name="register">رجسٹر کریں</string>
+    <string name="already_have_an_account_login_here">پہلے سے ہی ایک اکاؤنٹ ہے؟ یہاں لاگ ان کریں۔</string>
+    <string name="this_is_main_screen">یہاں مرکزی انٹرفیس ہے۔</string>
+
+    <string name="change_language" >زبان بدلیں</string>
+    <string name="setting">ترتیبات</string>
+
+    <string name="profile">ذاتی طور پر پروفائل</string>
+    <string name="support">مدد</string>
+    <string name="logout">باہر جائیں</string>
+    <string name="Support">مدد</string>
+    <string name="register_your_account">ایک اکاؤنٹ رجسٹر کریں</string>
+</resources>

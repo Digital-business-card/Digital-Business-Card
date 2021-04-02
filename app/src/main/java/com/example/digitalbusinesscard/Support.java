@@ -1,5 +1,6 @@
 package com.example.digitalbusinesscard;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -56,6 +57,10 @@ public class Support extends AppCompatActivity {
 
     public  void ClickLogout(View view){
 
+        SharedPreferences preferences = getSharedPreferences("CheckBox", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("remember", "false");
+        editor.apply();
         FirebaseAuth.getInstance().signOut();
         MainActivity.redirectActivity(this, Login.class);
 

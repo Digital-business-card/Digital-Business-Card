@@ -9,6 +9,7 @@
     android:gravity="center_vertical">
 
     <ImageView
+        android:id="@+id/Nav_Image"
         android:layout_width="77dp"
         android:layout_height="70dp"
         android:onClick="ClickMenu"

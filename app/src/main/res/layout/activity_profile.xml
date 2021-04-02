@@ -76,7 +76,7 @@
                     android:layout_marginTop="8dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="1nawaf"
+                    android:text=""
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -119,7 +119,7 @@
                     android:layout_marginTop="8dp"
                     android:ems="10"
                     android:inputType="textMultiLine"
-                    android:text="1I am software engineering student and my name is nawaf and i am 10000"
+                    android:text=""
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView2"
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -149,7 +149,7 @@
                     android:layout_marginTop="8dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="05050505051"
+                    android:text=""
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView4"
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -191,7 +191,7 @@
                     android:layout_marginTop="8dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="nnno69@hotmail.com1"
+                    android:text=""
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView5"
                     app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -233,7 +233,7 @@
                     android:layout_marginTop="8dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="05050505051"
+                    android:text=""
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView6"
                     app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -275,7 +275,7 @@
                     android:layout_marginTop="8dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="almroge1"
+                    android:text=""
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView7"
                     app:layout_constraintTop_toBottomOf="@+id/textView9" />

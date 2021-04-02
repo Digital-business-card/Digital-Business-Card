@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Digital business card</string>
+    <string name="my_name_is_manasour_and_this_is_a_test">اسمي منصور وهذا اختبار</string>
+    <string name="login_to_your_account">"تسجيل الدخول إلى حسابك "</string>
+    <string name="digital_business_card">"بطاقة عمل رقمية "</string>
+    <string name="enter_your_email">"أدخل بريدك الإلكتروني "</string>
+    <string name="enter_your_password">"ادخل رقمك السري "</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="do_not_have_an_account_register_here">"لا تملك حساب؟ سجل هنا. "</string>
+
+    <string name="enter_your_password_again">أدخل كلمة المرور الخاصة بك مرة أخرى</string>
+    <string name="register">تسجيل</string>
+    <string name="already_have_an_account_login_here">هل لديك حساب؟ تسجيل الدخول من هنا.</string>
+    <string name="this_is_main_screen">"هنا الواجهة الرئيسية. "</string>
+
+    <string name="change_language" >تغيير اللغة</string>
+    <string name="setting">الأعدادات</string>
+    <string name="support">الدعم</string>
+    <string name="profile">الملف الشخصي</string>
+
+    <string name="logout">تسجيل الخروج</string>
+    <string name="Support">الدعم</string>
+    <string name="register_your_account">سجل حساب</string>
+</resources>

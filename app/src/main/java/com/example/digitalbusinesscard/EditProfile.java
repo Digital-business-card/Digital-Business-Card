@@ -28,10 +28,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -57,12 +61,14 @@ public class EditProfile extends AppCompatActivity {
     ImageView EditProfileImage;
     Button EditSaveButton,EditCancel;
     String currentPhotoPath;
+    Uri contentUri;
 
     String userId;
     StorageReference storageReference;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     FirebaseUser user;
+    DatabaseReference DRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +104,7 @@ public class EditProfile extends AppCompatActivity {
         userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference();
+        DRef = FirebaseDatabase.getInstance().getReference().child("users");
 
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/Pictures.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -163,7 +170,46 @@ public class EditProfile extends AppCompatActivity {
                             }
                         });
 
+                HashMap RealHashMap = new HashMap();
+                RealHashMap.put("fname",EditProfullName.getText().toString());
+                RealHashMap.put("description", EditDescription.getText().toString());
+                RealHashMap.put("phone", EditPhoneNumber.getText().toString());
+                RealHashMap.put("email", EditEmail.getText().toString());
+                RealHashMap.put("whatsapp", EditWhatsapp.getText().toString());
+                RealHashMap.put("address", EditAddress.getText().toString());
+                //RealHashMap.put("users",uri.toString());
 
+
+                DRef.child(user.getUid()).updateChildren(RealHashMap).addOnSuccessListener(new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        Toast.makeText(EditProfile.this, "Setup profile Completed", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),Profile.class));
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditProfile.this, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                      /**storageReference.child("users/"+user.getUid()+"/Pictures.jpg").putFile(contentUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                if (task.isSuccessful()){
+
+                                    storageReference.child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+
+
+
+                                        }
+                                    });
+                                }
+                            }
+                        });**/
 
 
             }
@@ -222,7 +268,7 @@ public class EditProfile extends AppCompatActivity {
 
         if (requestCode == OPENSTUDIO_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                Uri contentUri = data.getData();
+                 contentUri = data.getData();
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String imageFileName = "JPEG_" + timeStamp +"."+getFileExt(contentUri);
                 Log.d("tag", "onActivityResult: Gallery Image Uri:  " +  imageFileName);
