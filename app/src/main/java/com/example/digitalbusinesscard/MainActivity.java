@@ -6,12 +6,16 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,9 +31,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -45,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     String userID;
     ImageView searchAll;
+    EditText inputSreach;
+    TextView UidToolBar,Uname;
 
-    DatabaseReference DReference;
+    DatabaseReference DReference,DRef;
     FirebaseUser user;
 
     FirebaseRecyclerOptions<Friends>options;
@@ -67,13 +76,19 @@ public class MainActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         userId = fAuth.getCurrentUser().getUid();
         DReference = FirebaseDatabase.getInstance().getReference().child("Friends");
+        DRef = FirebaseDatabase.getInstance().getReference().child("users");
         user = fAuth.getCurrentUser();
+
 
         drawerLayout =findViewById(R.id.drawer_layout);
         toolBarImage = findViewById(R.id.Nav_Image);
         navImage = findViewById(R.id.NavImage);
+        UidToolBar = findViewById(R.id.UidToolBar);
+        Uname = findViewById(R.id.Uname);
        // resentVerify = findViewById(R.id.LogVerify);
         searchAll =findViewById(R.id.searchAll);
+
+        inputSreach=findViewById(R.id.inputSearch);
 
         recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -91,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
                 Picasso.get().load(uri).into(navImage);
             }
         });**/
+        getUserinfo();
 
-       searchAll.setOnClickListener(new View.OnClickListener() {
+        searchAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,Users.class));
@@ -111,17 +127,73 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        LoadFriends("");
+        inputSreach.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(editable.toString()!=null){
+                    LoadFriends(editable.toString());
+                }
+                else {
+                    LoadFriends("");
+                }
+
+            }
+        });
+
+
+
+    }
+
+
+
+    private void getUserinfo() {
+        DRef.child(fAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists() && snapshot.getChildrenCount() > 0)
+                {
+                    if (snapshot.hasChild("image"))
+                    {
+                        String image = snapshot.child("image").getValue().toString();
+                        String UID = snapshot.child("Uid").getValue().toString();
+                        String UName = snapshot.child("fname").getValue().toString();
+                        Picasso.get().load(image).into(navImage);
+                        UidToolBar.setText(UID);
+                        Uname.setText(UName);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void LoadFriends(String s) {
-        Query query=DReference.child(user.getUid()).orderByChild("username").startAt(s).endAt("\uf8ff");
+        Query query=DReference.child(user.getUid()).orderByChild("username").startAt(s).endAt(s+"\uf8ff");
+        //Query UIDquery=DReference.child(user.getUid()).orderByChild("Uid").startAt(s).endAt(s+"\uf8ff");
         options=new FirebaseRecyclerOptions.Builder<Friends>().setQuery(query,Friends.class).build();
+        //options=new FirebaseRecyclerOptions.Builder<Friends>().setQuery(UIDquery,Friends.class).build();
         adapter=new FirebaseRecyclerAdapter<Friends, FriendMyViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull FriendMyViewHolder holder, final int position, @NonNull Friends model) {
                 if(!user.getUid().equals(getRef(position).getKey().toString())){
-                    //Picasso.get().load(model.getProfileImage()).into(holder.profile_Image);
+                    Picasso.get().load(model.getImage()).into(holder.profile_image);
                     holder.username.setText(model.getUsername());
+                    holder.UserId.setText(model.getUid());
                 }
                 else {
                     holder.itemView.setVisibility(View.GONE);

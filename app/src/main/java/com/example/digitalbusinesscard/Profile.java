@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,6 +18,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -31,15 +37,17 @@ import static com.example.digitalbusinesscard.MainActivity.redirectActivity;
 public class Profile extends AppCompatActivity {
 
     TextView ProfullName,Description,PhoneNumber,Email,Whatsapp,Address;
-    ImageView ProfileImage;
+    ImageView ProfileImage,navImage;
     DrawerLayout drawerLayout;
     Button EditButton;
+    TextView UidToolBar,Uname;
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     FirebaseUser user;
     String userId;
     StorageReference storageReference;
+    DatabaseReference DRef;
 
 
     @Override
@@ -47,6 +55,8 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
+        navImage = findViewById(R.id.NavImage);
         drawerLayout = findViewById(R.id.drawer_layout);
 
         ProfullName = findViewById(R.id.ProName);
@@ -58,20 +68,25 @@ public class Profile extends AppCompatActivity {
         ProfileImage = findViewById(R.id.ProImage);
         EditButton = findViewById(R.id.EditProfBtn);
 
+        UidToolBar = findViewById(R.id.UidToolBar);
+        Uname = findViewById(R.id.Uname);
+
         fAuth = FirebaseAuth.getInstance();
         userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+        DRef= FirebaseDatabase.getInstance().getReference().child("users");
 
 
-        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/Pictures.jpg");
+        /**StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/Pictures.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(ProfileImage);
             }
-        });
+        });**/
+        getUserinfo();
 
         DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -110,6 +125,32 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getUserinfo() {
+        DRef.child(fAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists() && snapshot.getChildrenCount() > 0)
+                {
+                    if (snapshot.hasChild("image"))
+                    {
+                        String image = snapshot.child("image").getValue().toString();
+                        String UID = snapshot.child("Uid").getValue().toString();
+                        String UName = snapshot.child("fname").getValue().toString();
+                        Picasso.get().load(image).into(navImage);
+                        UidToolBar.setText(UID);
+                        Uname.setText(UName);
+                        Picasso.get().load(image).into(ProfileImage);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void ClickMenu(View view){

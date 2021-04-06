@@ -22,21 +22,46 @@
 
         <include
             layout="@layout/main_toolbar_2" />
-       <View
-           android:layout_width="match_parent"
-           android:layout_height="1dp"
-
-           android:layout_marginBottom="16dp"
-           android:background="#636363"/>
 
 
-
-
-       <androidx.recyclerview.widget.RecyclerView
+       <androidx.constraintlayout.widget.ConstraintLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"
-           android:id="@+id/recyclerView"
-           />
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent">
+
+           <EditText
+               android:id="@+id/inputSearch"
+               android:layout_width="match_parent"
+               android:layout_height="40dp"
+               android:layout_marginTop="4dp"
+               android:background="@drawable/input_search"
+               android:drawableRight="@drawable/ic_search"
+               android:hint="@string/search_username_here"
+               android:paddingLeft="20dp"
+               android:paddingTop="8dp"
+               android:paddingRight="20dp"
+               android:paddingBottom="8dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="1.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent" />
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/recyclerView"
+               android:layout_width="0dp"
+               android:layout_height="0dp"
+               android:layout_marginTop="8dp"
+               android:layout_marginBottom="3dp"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/inputSearch" />
+
+
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

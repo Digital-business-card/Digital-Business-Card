@@ -33,8 +33,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Locale;
+import java.util.Random;
 
 public class Login extends AppCompatActivity {
+
 
     EditText LoginEmail,LoginPassword;
     CheckBox RememberCheck;
@@ -111,17 +113,23 @@ public class Login extends AppCompatActivity {
 
                 //for email
                 if(TextUtils.isEmpty(email)){
-                    LoginEmail.setError("Email is Required.");
+                    LoginEmail.setError("Email is Required!");
+                    return;
+                }
+
+                if(!email.contains("@"))
+                {
+                    LoginEmail.setError("Email must contains @ ");
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
-                    LoginPassword.setError("Password is Required.");
+                    LoginPassword.setError("Password is Required!");
                     return;
                 }
 
                 if(password.length() < 8){
-                    LoginPassword.setError("Password Must be =< 8 characters");
+                    LoginPassword.setError("Password Must be =< 8 characters!");
                     return;
                 }
                 LoginProgressBar.setVisibility(View.VISIBLE);

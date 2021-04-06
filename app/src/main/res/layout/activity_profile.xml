@@ -38,7 +38,7 @@
                 android:gravity="center">
 
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ProImage"
                     android:layout_width="125dp"
                     android:layout_height="125dp"

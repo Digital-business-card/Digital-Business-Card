@@ -19,16 +19,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import static com.example.digitalbusinesscard.MainActivity.redirectActivity;
@@ -36,12 +41,13 @@ import static com.example.digitalbusinesscard.MainActivity.redirectActivity;
 public class Users extends AppCompatActivity {
 
 
-    FirebaseRecyclerOptions<GetUsers> options;
-    FirebaseRecyclerAdapter<GetUsers, UsersViewHolder>adapter;
+    FirebaseRecyclerOptions<GetUsers> options,Uoptions;
+    FirebaseRecyclerAdapter<GetUsers, UsersViewHolder>adapter,Uadapter;
 
 
     DrawerLayout drawerLayout;
-
+    ImageView navImage;
+    TextView UidToolBar,Uname;
     DatabaseReference DRef;
     FirebaseAuth fAuth;
     FirebaseUser user;
@@ -54,9 +60,12 @@ public class Users extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 
+        navImage = findViewById(R.id.NavImage);
         drawerLayout = findViewById(R.id.drawer_layout);
 
         inputSreach=findViewById(R.id.inputSearch);
+        UidToolBar = findViewById(R.id.UidToolBar);
+        Uname = findViewById(R.id.Uname);
 
 
 
@@ -66,6 +75,8 @@ public class Users extends AppCompatActivity {
         DRef= FirebaseDatabase.getInstance().getReference().child("users");
         fAuth=FirebaseAuth.getInstance();
         user=fAuth.getCurrentUser();
+
+        getUserinfo();
         
         LoadUsers("");
 
@@ -87,7 +98,33 @@ public class Users extends AppCompatActivity {
                 }
                 else {
                     LoadUsers("");
+
                 }
+
+            }
+        });
+    }
+
+    private void getUserinfo() {
+        DRef.child(fAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists() && snapshot.getChildrenCount() > 0)
+                {
+                    if (snapshot.hasChild("image"))
+                    {
+                        String image = snapshot.child("image").getValue().toString();
+                        String UID = snapshot.child("Uid").getValue().toString();
+                        String UName = snapshot.child("fname").getValue().toString();
+                        Picasso.get().load(image).into(navImage);
+                        UidToolBar.setText(UID);
+                        Uname.setText(UName);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
@@ -96,14 +133,53 @@ public class Users extends AppCompatActivity {
 
 
     private void LoadUsers(String s) {
+
         Query query=DRef.orderByChild("fname").startAt(s).endAt(s+"\uf8ff");
+        Query UIDquery=DRef.orderByChild("Uid").startAt(s).endAt(s+"\uf8ff");
+
+        options=new FirebaseRecyclerOptions.Builder<GetUsers>().setQuery(UIDquery,GetUsers.class).build();
         options=new FirebaseRecyclerOptions.Builder<GetUsers>().setQuery(query,GetUsers.class).build();
+
+
         adapter=new FirebaseRecyclerAdapter<GetUsers, UsersViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull UsersViewHolder holder, final int position, @NonNull GetUsers model) {
+                adapter=new FirebaseRecyclerAdapter<GetUsers, UsersViewHolder>(Uoptions) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull UsersViewHolder holder, final int position, @NonNull GetUsers model) {
+                        if(!user.getUid().equals(getRef(position).getKey().toString())){
+                            Picasso.get().load(model.getImage()).into(holder.profile_Image);
+                            holder.UserId.setText(model.getUid());
+                            holder.username.setText(model.getFname());
+
+                        }
+                        else {
+                            holder.itemView.setVisibility(View.GONE);
+                            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0,0));
+                        }
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent =new Intent(Users.this,ViewFriendActivity.class);
+                                intent.putExtra("userKey",getRef(position).getKey().toString());
+                                startActivity(intent);
+                            }
+                        });
+
+                    }
+                    @NonNull
+                    @Override
+                    public UsersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_users,parent,false);
+                        return new UsersViewHolder(view);
+                    }
+                };
                 if(!user.getUid().equals(getRef(position).getKey().toString())){
-                    //Picasso.get().load(model.getProfileImage()).into(holder.profile_Image);
+                    Picasso.get().load(model.getImage()).into(holder.profile_Image);
+                    holder.UserId.setText(model.getUid());
                     holder.username.setText(model.getFname());
+
                 }
                 else {
                     holder.itemView.setVisibility(View.GONE);
@@ -130,7 +206,10 @@ public class Users extends AppCompatActivity {
 
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+
     }
+
+
 
    /** @Override
     public boolean onCreateOptionsMenu(Menu menu) {

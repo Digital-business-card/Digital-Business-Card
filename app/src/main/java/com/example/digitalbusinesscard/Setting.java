@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
@@ -28,7 +36,9 @@ public class Setting extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Button changPass;
     FirebaseAuth fAuth;
-
+    ImageView navImage;
+    TextView UidToolBar,Uname;
+    DatabaseReference DRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +48,16 @@ public class Setting extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         drawerLayout = findViewById(R.id.drawer_layout);
+        navImage = findViewById(R.id.NavImage);
+        UidToolBar = findViewById(R.id.UidToolBar);
+        Uname = findViewById(R.id.Uname);
 
         changPass=findViewById(R.id.ChangePass);
         fAuth = FirebaseAuth.getInstance();
+        DRef = FirebaseDatabase.getInstance().getReference().child("users");
 
+
+        getUserinfo();
 
         //ActionBar actionBar=getSupportActionBar();
         //actionBar.setTitle(getResources().getString(R.string.app_name));
@@ -101,6 +117,31 @@ public class Setting extends AppCompatActivity {
 
 
         }
+
+    private void getUserinfo() {
+        DRef.child(fAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists() && snapshot.getChildrenCount() > 0)
+                {
+                    if (snapshot.hasChild("image"))
+                    {
+                        String image = snapshot.child("image").getValue().toString();
+                        String UID = snapshot.child("Uid").getValue().toString();
+                        String UName = snapshot.child("fname").getValue().toString();
+                        Picasso.get().load(image).into(navImage);
+                        UidToolBar.setText(UID);
+                        Uname.setText(UName);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     public void showChangeLanguageDialog() {
         final String[] listItems = {"العربية","اردو","English"};

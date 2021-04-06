@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class Register extends AppCompatActivity {
     EditText RegisterEmail,RegisterPassword,RegisterPasswordAgain;
@@ -34,10 +35,16 @@ public class Register extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseUser user;
     DatabaseReference DRef;
+    Random Ran;
+    String UID;
+    int min,max,result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+
+        Ran=new Random();
 
         RegisterEmail = findViewById(R.id.RegEmail);
         RegisterPassword = findViewById(R.id.RegPassword);
@@ -50,6 +57,13 @@ public class Register extends AppCompatActivity {
         DRef = FirebaseDatabase.getInstance().getReference().child("users");
 
 
+
+
+
+
+
+
+
         //------------------------------------------------------------------------>fot exaption
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,22 +71,37 @@ public class Register extends AppCompatActivity {
 
 
 
+
+
+
                 String email = RegisterEmail.getText().toString().trim();
                 String password = RegisterPassword.getText().toString().trim();
+                String conformPassword = RegisterPasswordAgain.getText().toString().trim();
 
                 //for email
-                if(TextUtils.isEmpty(email)){
-                    RegisterEmail.setError("Email is Required.");
+                if(TextUtils.isEmpty(email) ){
+                    RegisterEmail.setError("Email is Required!");
+                    return;
+                }
+                if(!email.contains("@"))
+                {
+                    RegisterEmail.setError("Email must contains @ ");
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
-                    RegisterPassword.setError("Password is Required.");
+                    RegisterPassword.setError("Password is Required!");
                     return;
                 }
 
                 if(password.length() < 8){
-                    RegisterPassword.setError("Password Must be =< 8 characters");
+                    RegisterPassword.setError("Password Must be =< 8 characters!");
+                    return;
+                }
+
+                if(conformPassword.isEmpty()  ||  !conformPassword.equals(password))
+                {
+                    RegisterPasswordAgain.setError("password not match!");
                     return;
                 }
 
@@ -98,6 +127,24 @@ public class Register extends AppCompatActivity {
                                     Log.d("tag","onFailure: Email not sent" + e.getMessage());
                                 }
                             });
+
+
+                            String tempMin, tempMax;
+
+                            tempMin= String.valueOf(10000);
+                            tempMax=String.valueOf(99999);
+                            min=Integer.parseInt(tempMin);
+                            max=Integer.parseInt(tempMax);
+
+
+                            if(max>min){
+
+                                result =Ran.nextInt((max-min)+1)+min;
+                                UID=String.valueOf(result);
+
+                            }
+
+
                             HashMap RealHashMap = new HashMap();
                             RealHashMap.put("fname","new username");
                             RealHashMap.put("description", "new description");
@@ -105,6 +152,7 @@ public class Register extends AppCompatActivity {
                             RealHashMap.put("email", "new email");
                             RealHashMap.put("whatsapp", "new whatsapp");
                             RealHashMap.put("address", "new address");
+                            RealHashMap.put("Uid",UID);
                             //RealHashMap.put("users",uri.toString());
 
 

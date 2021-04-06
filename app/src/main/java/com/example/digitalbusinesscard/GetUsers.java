@@ -1,18 +1,20 @@
 package com.example.digitalbusinesscard;
 
 public class GetUsers {
-    private String fname,description,phone,email,whatsapp,address;
+    private String fname,description,phone,email,whatsapp,address,image,Uid;
 
     public GetUsers() {
     }
 
-    public GetUsers(String fname, String description, String phone, String email, String whatsapp, String address) {
+    public GetUsers(String fname, String description, String phone, String email, String whatsapp, String address, String image, String uid) {
         this.fname = fname;
         this.description = description;
         this.phone = phone;
         this.email = email;
         this.whatsapp = whatsapp;
         this.address = address;
+        this.image = image;
+        Uid = uid;
     }
 
     public String getFname() {
@@ -61,5 +63,21 @@ public class GetUsers {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
     }
 }

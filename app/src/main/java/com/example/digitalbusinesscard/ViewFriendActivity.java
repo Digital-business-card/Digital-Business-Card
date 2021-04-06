@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -30,12 +31,12 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseUser user;
 
-    String username,description,email,phone,whatsapp,address;
-    String fusername,fdescription,femail,fphone,fwhatsapp,faddress;
+    String username,description,email,phone,whatsapp,address,image,Uid;
+    String fusername,fdescription,femail,fphone,fwhatsapp,faddress,fimage,fUid;
 
 
     CircleImageView profileImage;
-    TextView Username;
+    TextView Username,Description;
     Button btnPerform,btnDecline;
     String CurrentState="nothing_happen";
     String userID;
@@ -53,7 +54,8 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
         fAuth=FirebaseAuth.getInstance();
         user=fAuth.getCurrentUser();
 
-        profileImage=findViewById(R.id.profile_image);
+        Description=findViewById(R.id.DescriptionFriendPro);
+        profileImage=findViewById(R.id.profileImage);
         Username=findViewById(R.id.usernameFriendPro);
         btnPerform=findViewById(R.id.btnPerform);
         btnDecline=findViewById(R.id.btnDecline);
@@ -270,6 +272,8 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
                         hashmap.put("phone",phone);
                         hashmap.put("whatsapp",whatsapp);
                         hashmap.put("address",address);
+                        hashmap.put("image",image);
+                        hashmap.put("Uid",Uid);
                         friendRef.child(user.getUid()).child(userID).updateChildren(hashmap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
@@ -283,6 +287,8 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
                                     hashmap.put("phone",fphone);
                                     hashmap.put("whatsapp",fwhatsapp);
                                     hashmap.put("address",faddress);
+                                    hashmap.put("image",fimage);
+                                    hashmap.put("Uid",fUid);
 
                                     friendRef.child(userID).child(user.getUid()).updateChildren(hashmap).addOnCompleteListener(new OnCompleteListener() {
                                         @Override
@@ -317,6 +323,8 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
             hashmap.put("phone",phone);
             hashmap.put("whatsapp",whatsapp);
             hashmap.put("address",address);
+            hashmap.put("image",image);
+            hashmap.put("Uid",Uid);
             friendRef.child(user.getUid()).child(userID).updateChildren(hashmap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
@@ -330,6 +338,8 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
                         hashmap.put("phone",fphone);
                         hashmap.put("whatsapp",fwhatsapp);
                         hashmap.put("address",faddress);
+                        hashmap.put("image",fimage);
+                        hashmap.put("Uid",fUid);
 
                         friendRef.child(userID).child(user.getUid()).updateChildren(hashmap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
@@ -357,8 +367,12 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
                     phone=snapshot.child("phone").getValue().toString();
                     whatsapp=snapshot.child("whatsapp").getValue().toString();
                     address=snapshot.child("address").getValue().toString();
+                    image=snapshot.child("image").getValue().toString();
+                    Uid=snapshot.child("Uid").getValue().toString();
 
+                    Picasso.get().load(image).into(profileImage);
                     Username.setText(username);
+                    Description.setText(description);
 
 
 
@@ -386,6 +400,8 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
                     fphone=snapshot.child("phone").getValue().toString();
                     fwhatsapp=snapshot.child("whatsapp").getValue().toString();
                     faddress=snapshot.child("address").getValue().toString();
+                    fimage=snapshot.child("image").getValue().toString();
+                    fUid=snapshot.child("Uid").getValue().toString();
 
 
 

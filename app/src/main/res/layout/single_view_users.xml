@@ -54,6 +54,19 @@
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/UidUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="05xxx"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/RecUsername"
+                app:layout_constraintTop_toBottomOf="@+id/RecUsername" />
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

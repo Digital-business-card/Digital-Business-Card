@@ -14,6 +14,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyFriendsProfile extends AppCompatActivity {
 
@@ -21,7 +24,8 @@ public class MyFriendsProfile extends AppCompatActivity {
     FirebaseUser user;
     FirebaseAuth fAuth;
 
-    String username,description,email,phone,whatsapp,address;
+    String username,description,email,phone,whatsapp,address,image;
+    CircleImageView friendProfileImage;
 
     String userID;
     TextView Username,Description,Email,Phone,Whatsapp,Address;
@@ -32,6 +36,7 @@ public class MyFriendsProfile extends AppCompatActivity {
         setContentView(R.layout.activity_my_friends_profile);
         userID=getIntent().getStringExtra("userKey");
 
+        friendProfileImage=findViewById(R.id.profileImage);
         Username=findViewById(R.id.usernameFriendPro);
         Description=findViewById(R.id.descriptionFriendPro);
         Email=findViewById(R.id.emailFriendPro);
@@ -61,7 +66,9 @@ public class MyFriendsProfile extends AppCompatActivity {
                     phone=snapshot.child(userID).child("phone").getValue().toString();
                     whatsapp=snapshot.child(userID).child("whatsapp").getValue().toString();
                     address=snapshot.child(userID).child("address").getValue().toString();
+                    image=snapshot.child(userID).child("image").getValue().toString();
 
+                    Picasso.get().load(image).into(friendProfileImage);
                    Username.setText(username);
                     Description.setText(description);
                     Email.setText(email);

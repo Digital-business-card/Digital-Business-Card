@@ -9,6 +9,7 @@ import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,6 +20,7 @@ import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -28,20 +30,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,10 +69,12 @@ public class EditProfile extends AppCompatActivity {
     ImageView EditProfileImage;
     Button EditSaveButton,EditCancel;
     String currentPhotoPath;
-    Uri contentUri;
+    Uri ImageUri;
 
     String userId;
     StorageReference storageReference;
+    String myUri = "";
+    StorageTask uploadTask;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     FirebaseUser user;
@@ -106,13 +116,13 @@ public class EditProfile extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         DRef = FirebaseDatabase.getInstance().getReference().child("users");
 
-        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/Pictures.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(EditProfileImage);
-            }
-        });
+        /**StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/Pictures.jpg");
+         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        @Override
+        public void onSuccess(Uri uri) {
+        Picasso.get().load(uri).into(EditProfileImage);
+        }
+        });**/
 
 
 
@@ -122,13 +132,18 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                CropImage.activity().setAspectRatio(1,1).start(EditProfile.this);
+
+
+
                 //Open Studio in Phone
-                Intent OpenStudioIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(OpenStudioIntent, OPENSTUDIO_REQUEST_CODE);
-                askCameraPermissions();
-                Toast.makeText(EditProfile.this, "Clicked", Toast.LENGTH_SHORT).show();
+                // Intent OpenStudioIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //startActivityForResult(OpenStudioIntent, OPENSTUDIO_REQUEST_CODE);
+                //askCameraPermissions();
+                //  Toast.makeText(EditProfile.this, "Clicked", Toast.LENGTH_SHORT).show();
             }
         });
+        getUserinfo();
 
         EditCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,34 +156,36 @@ public class EditProfile extends AppCompatActivity {
         EditSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(EditProfullName.getText().toString().isEmpty() || EditDescription.getText().toString().isEmpty() || EditPhoneNumber.getText().toString().isEmpty() || EditEmail.getText().toString().isEmpty() || EditWhatsapp.getText().toString().isEmpty() || EditAddress.getText().toString().isEmpty()){
-                    Toast.makeText(EditProfile.this, "One or many fields is Empty.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                /** if(EditProfullName.getText().toString().isEmpty() || EditDescription.getText().toString().isEmpty() || EditPhoneNumber.getText().toString().isEmpty() || EditEmail.getText().toString().isEmpty() || EditWhatsapp.getText().toString().isEmpty() || EditAddress.getText().toString().isEmpty()){
+                 Toast.makeText(EditProfile.this, "One or many fields is Empty.", Toast.LENGTH_SHORT).show();
+                 return;
+                 }**/
                 //Toast.makeText(EditProfile.this, "Clicked", Toast.LENGTH_SHORT).show();
 
-                        DocumentReference docRef = fStore.collection("users").document(user.getUid());
-                        Map<String,Object> edited = new HashMap<>();
-                        edited.put("fName",EditProfullName.getText().toString());
-                        edited.put("description", EditDescription.getText().toString());
-                        edited.put("phone", EditPhoneNumber.getText().toString());
-                        edited.put("email", EditEmail.getText().toString());
-                        edited.put("whatsapp", EditWhatsapp.getText().toString());
-                        edited.put("address", EditAddress.getText().toString());
-                        docRef.set(edited);
-                        docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(EditProfile.this, "Profile Updated.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(),Profile.class));
-                                finish();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(EditProfile.this, "failed.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+
+
+                DocumentReference docRef = fStore.collection("users").document(user.getUid());
+                Map<String,Object> edited = new HashMap<>();
+                edited.put("fName",EditProfullName.getText().toString());
+                edited.put("description", EditDescription.getText().toString());
+                edited.put("phone", EditPhoneNumber.getText().toString());
+                edited.put("email", EditEmail.getText().toString());
+                edited.put("whatsapp", EditWhatsapp.getText().toString());
+                edited.put("address", EditAddress.getText().toString());
+                docRef.set(edited);
+                docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(EditProfile.this, "Profile Updated.", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),Profile.class));
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditProfile.this, "failed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 HashMap RealHashMap = new HashMap();
                 RealHashMap.put("fname",EditProfullName.getText().toString());
@@ -194,26 +211,29 @@ public class EditProfile extends AppCompatActivity {
                     }
                 });
 
-                      /**storageReference.child("users/"+user.getUid()+"/Pictures.jpg").putFile(contentUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                if (task.isSuccessful()){
+                /**storageReference.child("users/"+user.getUid()+"/Pictures.jpg").putFile(contentUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if (task.isSuccessful()){
 
-                                    storageReference.child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-
-
-
-                                        }
-                                    });
-                                }
-                            }
-                        });**/
+                storageReference.child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
 
 
+
+                }
+                });
+                }
+                }
+                });**/
+
+
+                uploadProfileImage();
             }
         });
+
+        //------------------------
         EditProfullName.setText(profullName);
         EditDescription.setText(description);
         EditPhoneNumber.setText(phoneNumber);
@@ -225,133 +245,91 @@ public class EditProfile extends AppCompatActivity {
 
     }
 
-    private void askCameraPermissions() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
-        }else {
-            dispatchTakePictureIntent();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == CAMERA_PERM_CODE){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                dispatchTakePictureIntent();
-            }else {
-                Toast.makeText(this, "Camera Permission is Required to Use camera.", Toast.LENGTH_SHORT).show();
+    private void getUserinfo() {
+        DRef.child(fAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists() && snapshot.getChildrenCount() > 0)
+                {
+                    if (snapshot.hasChild("image"))
+                    {
+                        String image = snapshot.child("image").getValue().toString();
+                        Picasso.get().load(image).into(EditProfileImage);
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
-
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //if (requestCode == CAMERA_REQUEST_CODE) {
-        //    if (resultCode == Activity.RESULT_OK) {
-         //       File f = new File(currentPhotoPath);
-                //EditProfileImage.setImageURI(Uri.fromFile(f));
-           //     Log.d("tag","Absolute Url of Image is "+ Uri.fromFile(f));
 
-              //  Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-               // Uri contentUri = Uri.fromFile(f);
-              //  mediaScanIntent.setData(contentUri);
-              //  this.sendBroadcast(mediaScanIntent);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK  && data !=null)
+        {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            ImageUri = result.getUri();
 
-               // uploadImageToFirebase(f.getName(),contentUri);
-            //}
-
-       // }
-
-        if (requestCode == OPENSTUDIO_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                 contentUri = data.getData();
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String imageFileName = "JPEG_" + timeStamp +"."+getFileExt(contentUri);
-                Log.d("tag", "onActivityResult: Gallery Image Uri:  " +  imageFileName);
-                //EditProfileImage.setImageURI(contentUri);
-
-                EditProfileImage.setImageURI(contentUri);
-
-                uploadImageToFirebase(imageFileName,contentUri);
-            }
-
+            EditProfileImage.setImageURI(ImageUri);
         }
-
+        else
+        {
+            Toast.makeText(this, "Erorr, Try Again", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void uploadImageToFirebase(String name, Uri contentUri) {
-        final StorageReference image = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/Pictures.jpg");
-        image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        //-----------------------> if i want to take the picture from the firebase.
-                        //Picasso.get().load(uri).into(EditProfileImage);
+    private void uploadProfileImage() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Set your profile");
+        progressDialog.setMessage("Please wait, while we are setting your data ");
+        progressDialog.show();
+
+        if (ImageUri != null)
+        {
+            final StorageReference SRef = storageReference
+                    .child("user"+fAuth.getCurrentUser().getUid()+ ".jpg");
+
+            uploadTask = SRef.putFile(ImageUri);
+
+            uploadTask.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful())
+                    {
+                        throw task.getException();
                     }
-                });
-                Toast.makeText(EditProfile.this, "Image is Uploaded Successfully.", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EditProfile.this, "Upload Failled.", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-    }
+                    return SRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful())
+                    {
+                        Uri downloadUri = (Uri) task.getResult();
+                        myUri = downloadUri.toString();
 
-    private String getFileExt(Uri contentUri) {
-        ContentResolver c = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(c.getType(contentUri));
-    }
+                        HashMap<String, Object> userMap = new HashMap<>();
+                        userMap.put("image",myUri);
 
+                        DRef.child(fAuth.getCurrentUser().getUid()).updateChildren(userMap);
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-               File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        //File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+                        progressDialog.dismiss();
+                    }
 
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.digitalbusinesscard.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-            }
+                }
+            });
+        }
+        else
+        {
+            progressDialog.dismiss();
+            Toast.makeText(this, "Image not selected", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }
