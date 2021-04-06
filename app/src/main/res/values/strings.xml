@@ -22,4 +22,31 @@
     <string name="Support">Support</string>
     <string name="logout">Logout</string>
     <string name="register_your_account">Register Your Account</string>
+    <string name="full_name">Full Name</string>
+    <string name="description">Description</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="your_name">your name...</string>
+    <string name="describe_yourself">describe yourself...</string>
+    <string name="username">Username</string>
+    <string name="changing_my_password">changing my password</string>
+    <string name="email">Email</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="address">Address</string>
+    <string name="your_city">Your city</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="welcome">Welcome!</string>
+    <string name="you_don_t_have_account">You don\'t have account?</string>
+    <string name="Register">Register</string>
+    <string name="search_username_here">Search username here...</string>
+    <string name="forgot_your_password">Forgot your Password?</string>
+    <string name="remember_me">Remember me</string>
+    <string name="empty">Empty</string>
+    <string name="whatsapp_number">Whatsapp Number:</string>
+
+    <string name="edit_profile">Edit Profile</string>
+    <string name="you_already_have_an_account">You already have an account?</string>
+    <string name="send_request">SEND REQUEST</string>
+    <string name="don_t_have_a_card">Don\'t have a card?</string>
+    <string name="eng">Eng</string>
 </resources>

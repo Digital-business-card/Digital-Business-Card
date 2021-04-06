@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
+    android:background="@drawable/main_1"
     android:id="@+id/drawer_layout"
 
 
@@ -20,20 +21,17 @@
 
 
         <include
-            layout="@layout/main_toolbar" />
+            layout="@layout/main_toolbar_2" />
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
 
-
-       <Button
-           android:id="@+id/LogVerify"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginEnd="16dp"
-           android:layout_marginRight="16dp"
            android:layout_marginBottom="16dp"
-           android:text="Resent Verify Email"
-           android:visibility="visible"
-           app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintEnd_toEndOf="parent" />
+           android:background="#636363"/>
+
+
+
+
        <androidx.recyclerview.widget.RecyclerView
            android:layout_width="match_parent"
            android:layout_height="match_parent"

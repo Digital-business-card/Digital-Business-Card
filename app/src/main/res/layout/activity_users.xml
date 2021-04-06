@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_green"
 
     android:id="@+id/drawer_layout"
 
@@ -25,7 +26,7 @@
             android:id="@+id/inputSearch"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="Search username here..."
+            android:hint="@string/search_username_here"
             android:background="@drawable/input_search"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -70,7 +71,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <include layout="@layout/main_toolbar" />
+            <include
+                android:id="@+id/include"
+                layout="@layout/main_toolbar" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#636363"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include" />
 
 
         </LinearLayout>
@@ -88,7 +101,14 @@
         android:background="@android:color/white"
         tools:ignore="MissingConstraints">
 
-        <include layout="@layout/main_nav" />
+        <include
+            layout="@layout/main_nav"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp" />
     </RelativeLayout>
 
 

@@ -7,11 +7,16 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Locale;
@@ -21,6 +26,8 @@ import static com.example.digitalbusinesscard.MainActivity.redirectActivity;
 public class Setting extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
+    Button changPass;
+    FirebaseAuth fAuth;
 
 
     @Override
@@ -31,6 +38,10 @@ public class Setting extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         drawerLayout = findViewById(R.id.drawer_layout);
+
+        changPass=findViewById(R.id.ChangePass);
+        fAuth = FirebaseAuth.getInstance();
+
 
         //ActionBar actionBar=getSupportActionBar();
         //actionBar.setTitle(getResources().getString(R.string.app_name));
@@ -49,12 +60,52 @@ public class Setting extends AppCompatActivity {
 
 
 
+        changPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText changePassword = new EditText(view.getContext());
+                AlertDialog.Builder changePasswoedDialog = new AlertDialog.Builder(view.getContext());
+                changePasswoedDialog.setTitle("Change Password?");
+                changePasswoedDialog.setMessage("Enter your Email to Receive change password Link.");
+                changePasswoedDialog.setView(changePassword);
+
+                changePasswoedDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        String mail = changePassword.getText().toString();
+                        fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(Setting.this, "Change Link Sent To Your Email", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Setting.this, "Error ! Change password Link is Not Sent." + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
+                changePasswoedDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                changePasswoedDialog.create().show();
+
+            }
+        });
+
 
         }
 
     public void showChangeLanguageDialog() {
         final String[] listItems = {"العربية","اردو","English"};
         AlertDialog.Builder mBuilder=new AlertDialog.Builder(Setting.this);
+
         mBuilder.setTitle("Choose Language...");
         mBuilder.setSingleChoiceItems(listItems,-1,new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogInterface, int i){

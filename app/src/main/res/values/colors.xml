@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimaryDark">#22577A</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorGreen">#008000</color>
-    <color name="colorRed">#FF0000</color>
+
     <color name="colorForestGreen">	#228B22</color>
+
+
+
+    <color name="grey">#707070</color>
+    <color name="blue">#22577A</color>
+    <color name="green">#6AEBB4</color>
+    <color name="white">#ffffff</color>
+    <color name="redd">#FF0000</color>
+    <color name="black">#000000</color>
+    <color name="white_green">#B2FFDE</color>
+    <color name="buttonGreen">#C7F9CC</color>
 </resources>

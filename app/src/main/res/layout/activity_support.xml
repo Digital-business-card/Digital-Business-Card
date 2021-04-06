@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_1"
 
     android:id="@+id/drawer_layout"
 
@@ -18,6 +19,12 @@
 
         <include
             layout="@layout/main_toolbar"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            android:layout_marginBottom="16dp"
+            android:background="#636363"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     Button  resentVerify;
     RecyclerView recyclerView;
     String userID;
+    ImageView searchAll;
 
     DatabaseReference DReference;
     FirebaseUser user;
@@ -71,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout =findViewById(R.id.drawer_layout);
         toolBarImage = findViewById(R.id.Nav_Image);
         navImage = findViewById(R.id.NavImage);
-        resentVerify = findViewById(R.id.LogVerify);
+       // resentVerify = findViewById(R.id.LogVerify);
+        searchAll =findViewById(R.id.searchAll);
 
         recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -81,16 +83,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-          StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/Pictures.jpg");
+          /**StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/Pictures.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(toolBarImage);
                 Picasso.get().load(uri).into(navImage);
             }
-        });
+        });**/
 
-       resentVerify.setOnClickListener(new View.OnClickListener() {
+       searchAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,Users.class));
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent=new Intent(MainActivity.this,MyFriendsProfile.class);
+                        Intent intent=new Intent(MainActivity.this,ViewFriendActivity.class);
                         intent.putExtra("userKey",getRef(position).getKey().toString());
                         startActivity(intent);
                     }
@@ -155,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
 
         openDrawer(drawerLayout);
   }
+
+
 
   public  void ClickHome(View view){
 
