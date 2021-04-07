@@ -41,8 +41,8 @@ import static com.example.digitalbusinesscard.MainActivity.redirectActivity;
 public class Users extends AppCompatActivity {
 
 
-    FirebaseRecyclerOptions<GetUsers> options,Uoptions;
-    FirebaseRecyclerAdapter<GetUsers, UsersViewHolder>adapter,Uadapter;
+    FirebaseRecyclerOptions<GetUsers> options;
+    FirebaseRecyclerAdapter<GetUsers, UsersViewHolder>adapter;
 
 
     DrawerLayout drawerLayout;
@@ -135,46 +135,16 @@ public class Users extends AppCompatActivity {
     private void LoadUsers(String s) {
 
         Query query=DRef.orderByChild("fname").startAt(s).endAt(s+"\uf8ff");
-        Query UIDquery=DRef.orderByChild("Uid").startAt(s).endAt(s+"\uf8ff");
+       // Query UIDquery=DRef.orderByChild("Uid").startAt(s).endAt(s+"\uf8ff");
 
-        options=new FirebaseRecyclerOptions.Builder<GetUsers>().setQuery(UIDquery,GetUsers.class).build();
+        //options=new FirebaseRecyclerOptions.Builder<GetUsers>().setQuery(UIDquery,GetUsers.class).build();
         options=new FirebaseRecyclerOptions.Builder<GetUsers>().setQuery(query,GetUsers.class).build();
 
 
         adapter=new FirebaseRecyclerAdapter<GetUsers, UsersViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull UsersViewHolder holder, final int position, @NonNull GetUsers model) {
-                adapter=new FirebaseRecyclerAdapter<GetUsers, UsersViewHolder>(Uoptions) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull UsersViewHolder holder, final int position, @NonNull GetUsers model) {
-                        if(!user.getUid().equals(getRef(position).getKey().toString())){
-                            Picasso.get().load(model.getImage()).into(holder.profile_Image);
-                            holder.UserId.setText(model.getUid());
-                            holder.username.setText(model.getFname());
 
-                        }
-                        else {
-                            holder.itemView.setVisibility(View.GONE);
-                            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0,0));
-                        }
-                        holder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent =new Intent(Users.this,ViewFriendActivity.class);
-                                intent.putExtra("userKey",getRef(position).getKey().toString());
-                                startActivity(intent);
-                            }
-                        });
-
-                    }
-                    @NonNull
-                    @Override
-                    public UsersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-                        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_users,parent,false);
-                        return new UsersViewHolder(view);
-                    }
-                };
                 if(!user.getUid().equals(getRef(position).getKey().toString())){
                     Picasso.get().load(model.getImage()).into(holder.profile_Image);
                     holder.UserId.setText(model.getUid());

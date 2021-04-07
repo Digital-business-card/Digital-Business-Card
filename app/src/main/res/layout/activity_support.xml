@@ -26,11 +26,30 @@
             android:layout_marginBottom="16dp"
             android:background="#636363"/>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/Support"
-            android:textSize="50sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/if_you_face_any_problem_or_would_like_to_inquire_you_can_contact_us_via_e_mail"
+            android:textSize="20sp"
+            android:textColor="@color/black"
             android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="30dp"
+
+            android:layout_marginBottom="40dp"
+            android:text=" DbusinessCard_21@hotmail.com"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/ic_baseline_email_24"
+            android:textColor="@color/blue"
+            android:gravity="center" />
 
     </LinearLayout>
 

@@ -53,6 +53,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:layout_marginTop="8dp"
+                android:background="#636363"
+                app:layout_constraintBottom_toTopOf="@+id/DescriptionFriendPro"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/usernameFriendPro" />
+
             <TextView
                 android:id="@+id/DescriptionFriendPro"
                 android:layout_width="wrap_content"

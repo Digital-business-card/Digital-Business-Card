@@ -40,26 +40,27 @@
                 android:id="@+id/ChangeMyLang"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
                 android:background="@drawable/button"
                 android:text="@string/change_language"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.414"
+                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.353" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/ChangePass"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/button"
                 android:text="@string/changing_my_password"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.414"
+                app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/ChangeMyLang"
+                app:layout_constraintVertical_bias="0.116" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
