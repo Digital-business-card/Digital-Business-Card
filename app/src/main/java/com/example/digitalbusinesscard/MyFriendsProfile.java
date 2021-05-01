@@ -3,7 +3,13 @@ package com.example.digitalbusinesscard;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +35,7 @@ public class MyFriendsProfile extends AppCompatActivity {
 
     String userID;
     TextView Username,Description,Email,Phone,Whatsapp,Address;
+    ImageView CopyName,CopyDescription,CopyEmail,CopyPhone,CopyWhatsApp,CopyAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +51,87 @@ public class MyFriendsProfile extends AppCompatActivity {
         Whatsapp=findViewById(R.id.whatsFriendPro);
         Address=findViewById(R.id.addressFriendPro);
 
+        CopyName = findViewById(R.id.Copy1);
+        CopyDescription = findViewById(R.id.Copy2);
+        CopyEmail = findViewById(R.id.Copy3);
+        CopyPhone = findViewById(R.id.Copy4);
+        CopyWhatsApp = findViewById(R.id.Copy5);
+        CopyAddress = findViewById(R.id.Copy6);
+
         fAuth=FirebaseAuth.getInstance();
         user=fAuth.getCurrentUser();
         DRef= FirebaseDatabase.getInstance().getReference().child("Friends").child(user.getUid());
 
 
         LoadFriend();
+
+
+        CopyName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("EditText", Username.getText().toString());
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(MyFriendsProfile.this, "Copied.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        CopyDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("EditText", Description.getText().toString());
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(MyFriendsProfile.this, "Copied.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        CopyEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("EditText", Email.getText().toString());
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(MyFriendsProfile.this, "Copied.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        CopyPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("EditText", Phone.getText().toString());
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(MyFriendsProfile.this, "Copied.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        CopyWhatsApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("EditText", Whatsapp.getText().toString());
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(MyFriendsProfile.this, "Copied.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        CopyAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("EditText", Address.getText().toString());
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(MyFriendsProfile.this, "Copied.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

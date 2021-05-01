@@ -18,6 +18,6 @@ public class FriendMyViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         username=itemView.findViewById(R.id.Fusername);
         profile_image=itemView.findViewById(R.id.profile_image);
-        UserId=itemView.findViewById(R.id.UserIDMain);
+        UserId=itemView.findViewById(R.id.UserIDFriend);
     }
 }

@@ -24,223 +24,287 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-         <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/green">
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/green">
 
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/ic_profile"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/TusernameFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/username"
+                    android:textColor="@color/blue"
+
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+
+                <TextView
+                    android:id="@+id/usernameFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/empty"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TusernameFriendPro" />
+
+                <TextView
+                    android:id="@+id/TdescriptionFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/description"
+                    android:textColor="@color/blue"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/usernameFriendPro" />
+
+                <TextView
+                    android:id="@+id/descriptionFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/input_search"
+                    android:inputType="textMultiLine"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/empty"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TdescriptionFriendPro" />
+
+                <TextView
+                    android:id="@+id/TemailFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/email"
+                    android:textColor="@color/blue"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/descriptionFriendPro" />
+
+                <TextView
+                    android:id="@+id/emailFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/input_search"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/empty"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TemailFriendPro" />
+
+                <TextView
+                    android:id="@+id/TphoneFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/phone_number"
+                    android:textColor="@color/blue"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/emailFriendPro" />
+
+                <TextView
+                    android:id="@+id/phoneFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/input_search"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/empty"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TphoneFriendPro" />
+
+                <TextView
+                    android:id="@+id/TwhatsappFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/whatsapp_number"
+                    android:textColor="@color/blue"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneFriendPro" />
+
+                <TextView
+                    android:id="@+id/whatsFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/input_search"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/empty"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TwhatsappFriendPro" />
+
+                <TextView
+                    android:id="@+id/TaddressFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/address"
+                    android:textColor="@color/blue"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/whatsFriendPro" />
+
+                <TextView
+                    android:id="@+id/addressFriendPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/input_search"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/empty"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TaddressFriendPro" />
+
+                <ImageView
+                    android:id="@+id/Copy1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/TusernameFriendPro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.111"
+                    app:layout_constraintStart_toEndOf="@+id/TusernameFriendPro"
+                    app:layout_constraintTop_toTopOf="@+id/TusernameFriendPro"
+                    app:srcCompat="@drawable/ic_baseline_content_copy"
+                    tools:ignore="VectorDrawableCompat"/>
+                <ImageView
+                    android:id="@+id/Copy2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/TdescriptionFriendPro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.111"
+                    app:layout_constraintStart_toEndOf="@+id/TdescriptionFriendPro"
+                    app:layout_constraintTop_toTopOf="@+id/TdescriptionFriendPro"
+                    app:srcCompat="@drawable/ic_baseline_content_copy"
+                    tools:ignore="VectorDrawableCompat"/>
+                <ImageView
+                    android:id="@+id/Copy3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/TemailFriendPro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.111"
+                    app:layout_constraintStart_toEndOf="@+id/TemailFriendPro"
+                    app:layout_constraintTop_toTopOf="@+id/TemailFriendPro"
+                    app:srcCompat="@drawable/ic_baseline_content_copy"
+                    tools:ignore="VectorDrawableCompat"/>
+                <ImageView
+                    android:id="@+id/Copy4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/TphoneFriendPro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.111"
+                    app:layout_constraintStart_toEndOf="@+id/TphoneFriendPro"
+                    app:layout_constraintTop_toTopOf="@+id/TphoneFriendPro"
+                    app:srcCompat="@drawable/ic_baseline_content_copy"
+                    tools:ignore="VectorDrawableCompat" />
+                <ImageView
+                    android:id="@+id/Copy5"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/TwhatsappFriendPro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.111"
+                    app:layout_constraintStart_toEndOf="@+id/TwhatsappFriendPro"
+                    app:layout_constraintTop_toTopOf="@+id/TwhatsappFriendPro"
+                    app:srcCompat="@drawable/ic_baseline_content_copy"
+                    tools:ignore="VectorDrawableCompat"/>
+                <ImageView
+                    android:id="@+id/Copy6"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/TaddressFriendPro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.111"
+                    app:layout_constraintStart_toEndOf="@+id/TaddressFriendPro"
+                    app:layout_constraintTop_toTopOf="@+id/TaddressFriendPro"
+                    app:srcCompat="@drawable/ic_baseline_content_copy"
+                    tools:ignore="VectorDrawableCompat"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileImage"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="32dp"
-                android:src="@drawable/ic_profile"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/TusernameFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/username"
-                android:textColor="@color/blue"
-
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileImage" />
-
-            <TextView
-                android:id="@+id/usernameFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/empty"
-                android:textColor="@color/design_default_color_on_secondary"
-                android:background="@drawable/input_search"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TusernameFriendPro" />
-
-            <TextView
-                android:id="@+id/TdescriptionFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/description"
-                android:textColor="@color/blue"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/usernameFriendPro" />
-
-            <TextView
-                android:id="@+id/descriptionFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:inputType="textMultiLine"
-                android:text="@string/empty"
-                android:textColor="@color/design_default_color_on_secondary"
-                android:background="@drawable/input_search"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TdescriptionFriendPro" />
-
-            <TextView
-                android:id="@+id/TemailFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/email"
-                android:textColor="@color/blue"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionFriendPro" />
-
-            <TextView
-                android:id="@+id/emailFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/empty"
-                android:textColor="@color/design_default_color_on_secondary"
-                android:background="@drawable/input_search"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TemailFriendPro" />
-
-            <TextView
-                android:id="@+id/TphoneFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/phone_number"
-                android:textColor="@color/blue"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailFriendPro" />
-
-            <TextView
-                android:id="@+id/phoneFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/empty"
-                android:textColor="@color/design_default_color_on_secondary"
-                android:background="@drawable/input_search"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TphoneFriendPro" />
-
-            <TextView
-                android:id="@+id/TwhatsappFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/whatsapp_number"
-                android:textColor="@color/blue"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneFriendPro" />
-
-            <TextView
-                android:id="@+id/whatsFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/empty"
-                android:textColor="@color/design_default_color_on_secondary"
-                android:background="@drawable/input_search"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TwhatsappFriendPro" />
-
-            <TextView
-                android:id="@+id/TaddressFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/address"
-                android:textColor="@color/blue"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/whatsFriendPro" />
-
-            <TextView
-                android:id="@+id/addressFriendPro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/input_search"
-                android:paddingLeft="20dp"
-                android:paddingTop="8dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="8dp"
-                android:text="@string/empty"
-                android:textColor="@color/design_default_color_on_secondary"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TaddressFriendPro" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </ScrollView>
+        </ScrollView>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

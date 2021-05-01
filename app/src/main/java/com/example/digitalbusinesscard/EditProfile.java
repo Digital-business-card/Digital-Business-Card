@@ -161,7 +161,35 @@ public class EditProfile extends AppCompatActivity {
                  return;
                  }**/
                 //Toast.makeText(EditProfile.this, "Clicked", Toast.LENGTH_SHORT).show();
+                String UName=EditProfullName.getText().toString().trim();
 
+                if (UName.length() > 15)
+                {
+                    EditProfullName.setError("The name must be <= 15 characters!");
+                    return;
+                }
+                String Uphone=EditPhoneNumber.getText().toString().trim();
+
+                if (Uphone.length() > 15)
+                {
+                    EditPhoneNumber.setError("The number must be <= 15 characters!");
+                    return;
+                }
+
+                String UWhats=EditWhatsapp.getText().toString().trim();
+
+                if (UWhats.length() > 15)
+                {
+                    EditWhatsapp.setError("The number must be <= 15 characters!");
+                    return;
+                }
+                String UAddress=EditAddress.getText().toString().trim();
+
+                if (UAddress.length() > 15)
+                {
+                    EditAddress.setError("The Address must be <= 15 characters!");
+                    return;
+                }
 
 
                 DocumentReference docRef = fStore.collection("users").document(user.getUid());
@@ -227,9 +255,11 @@ public class EditProfile extends AppCompatActivity {
                 }
                 }
                 });**/
-
-
                 uploadProfileImage();
+
+
+
+
             }
         });
 

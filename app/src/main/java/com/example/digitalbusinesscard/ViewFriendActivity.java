@@ -36,7 +36,7 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
 
 
     CircleImageView profileImage;
-    TextView Username,Description;
+    TextView Username,Description,UserIDFriend;
     Button btnPerform,btnDecline;
     String CurrentState="nothing_happen";
     String userID;
@@ -57,6 +57,7 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
         Description=findViewById(R.id.DescriptionFriendPro);
         profileImage=findViewById(R.id.profileImage);
         Username=findViewById(R.id.usernameFriendPro);
+        UserIDFriend=findViewById(R.id.UserIDFriend);
         btnPerform=findViewById(R.id.btnPerform);
         btnDecline=findViewById(R.id.btnDecline);
 
@@ -372,6 +373,7 @@ public class ViewFriendActivity<Private> extends AppCompatActivity {
 
                     Picasso.get().load(image).into(profileImage);
                     Username.setText(username);
+                    UserIDFriend.setText(Uid);
                     Description.setText(description);
 
 
